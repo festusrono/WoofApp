@@ -110,18 +110,30 @@ fun DogItem(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Card(modifier = modifier) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.padding_small))
-        ) {
-            DogIcon(dog.imageResourceId)
-            DogInformation(dog.name, dog.age)
-            Spacer(Modifier.weight(1f)) //moves the button to the end of the row
-            DogItemButton(
-                expanded = expanded,
-                onClick = { /*expanded = !expanded*/ }
+        Column() {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(dimensionResource(R.dimen.padding_small))
+            ) {
+                DogIcon(dog.imageResourceId)
+                DogInformation(dog.name, dog.age)
+                Spacer(modifier = Modifier.weight(1f)) //moves the button to the end of the row
+                DogItemButton(
+                    expanded = expanded,
+                    onClick = { /*expanded = !expanded*/ }
+                )
+            }
+            DogHobby(
+                dog.hobbies,
+                modifier = Modifier.padding(
+                    start = dimensionResource(R.dimen.padding_medium),
+                    top = dimensionResource(R.dimen.padding_small),
+                    end = dimensionResource(R.dimen.padding_medium),
+                    bottom = dimensionResource(R.dimen.padding_medium)
+                )
             )
+
         }
     }
 }
@@ -195,7 +207,24 @@ fun DogInformation(
         )
     }
 }
-
+@Composable
+fun DogHobby(
+    @StringRes dogHobby: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+    Text(
+        text = stringResource(R.string.about),
+        style = MaterialTheme.typography.labelSmall
+    )
+        Text(
+            text = stringResource(dogHobby),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
